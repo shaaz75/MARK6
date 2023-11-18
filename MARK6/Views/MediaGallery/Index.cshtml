@@ -1,0 +1,118 @@
+﻿@model IEnumerable<MARK6.Models.MediaGallery>
+
+@{
+	ViewBag.Title = ViewBag.MediaType;
+}
+
+<h2>@ViewBag.MediaType Gallery</h2>
+
+<p>
+	@*@Html.ActionLink("Create New", "Create", new { mediaType = ViewBag.MediaType })*@
+</p>
+
+<!-- Open "Create" action in a modal -->
+<a href="#" data-toggle="modal" data-target="#createModal">Create New</a>
+
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width:500px" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+
+				<button type="button" class="close btn btn-outline-light" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				@if (ViewBag.MediaType == "Photo")
+				{
+					<h5 class="modal-title" id="createModalLabel">Upload Image</h5>
+				}
+				else
+				{
+					<h5 class="modal-title" id="createModalLabel">Upload Video</h5>
+				}
+
+
+			</div>
+			<div class="modal-body">
+				<!-- Load your "Create" action content here using AJAX or include a partial view -->
+				@Html.Partial("Create", new ViewDataDictionary { { "mediaType", ViewBag.MediaType } })
+			</div>
+			<!--<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+			<!-- You can add additional buttons here if needed -->
+			<!--</div>-->
+		</div>
+	</div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width:500px" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+
+				<button type="button" class="close btn btn-outline-light" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				@if (ViewBag.MediaType == "Photo")
+				{
+					<h5 class="modal-title" id="updateModalLabel">Upload Image</h5>
+				}
+				else
+				{
+					<h5 class="modal-title" id="updateModalLabel">Upload Video</h5>
+				}
+
+
+			</div>
+			<div class="modal-body">
+				-->
+				<!-- Load your "Edit" action content here using AJAX or include a partial view -->
+				@Html.Partial("Edit", new ViewDataDictionary { { "mediaType", ViewBag.MediaType }, { "id", 8 } })
+			</div>-->
+			<!--<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+			<!-- You can add additional buttons here if needed -->
+			<!--</div>-->
+		</div>
+	</div>
+</div>
+
+<!-- Bootstrap JS (make sure to include jQuery and Popper.js as well) -->
+<script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+@*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>*@
+
+<div class="row">
+	@foreach (var item in Model)
+	{
+
+		<div class="col-xs-4 col-sm-4 col-md-4">
+			<div class="card" style="width: 18rem;">
+				@if (ViewBag.MediaType == "Photo")
+				{
+					<img class="card-img-top" src=@Url.Content(item.MediaPath) alt="Card image cap" style="width:250px;height:250px">
+				}
+				else
+				{
+					<video style="width:250px;height:250px" controls>
+						<source src=@Url.Content(item.MediaPath) type="video/mp4">
+					</video>
+
+				}
+
+				<div class="card-body">
+					<h5 class="card-title">@item.Title</h5>
+					@*@Html.ActionLink("Edit", "Edit", new { mediaType = ViewBag.MediaType, id = item.MediaId }, new { @class = "btn", data_toggle = "modal", data_target = "#updateModal" })*@
+
+					@Html.ActionLink("Details", "Details", new { id = item.MediaId }) |
+					@Html.ActionLink("Delete", "Delete", new { id = item.MediaId })
+
+					<a href="#" data-toggle="modal" data-target="#updateModal">Edit New</a>
+				</div>
+			</div>
+		</div>
+
+	}
+</div>

@@ -1,0 +1,72 @@
+﻿@model MARK6.Models.MediaGallery
+@using System.Configuration
+
+
+@{
+	ViewBag.Title = "Create";
+	// Retrieve accepted file extensions from web.config
+	// Retrieve accepted file extensions from web.config
+	var imageExtensions = ConfigurationManager.AppSettings["imageExtensions"];
+	var videoExtensions = ConfigurationManager.AppSettings["videoExtensions"];
+}
+
+@using (Html.BeginForm("Create", "MediaGallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="form-group">
+			<div class="col-md-2">
+				@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+			</div>
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-2">
+				@Html.LabelFor(model => model.MediaPath, htmlAttributes: new { @class = "control-label col-md-2" })
+			</div>
+			<div class="col-md-10">
+				@if (ViewBag.MediaType == "Photo")
+				{
+					@*<input type="file" name="MediaFile" required accept=@imageExtensions />*@
+					<input class="form-control form-control-lg" type="file" name="MediaFile" required accept=@imageExtensions />
+					<p style="font-size:small">Upload @imageExtensions file of up to 7 MB</p>
+				}
+				else
+				{
+					@*<input type="file" name="MediaFile" required accept=@videoExtensions />*@
+					<input class="form-control form-control-lg" type="file" name="MediaFile" required accept=@videoExtensions />
+					<p style="font-size:small">Upload @videoExtensions file of up to 7 MB</p>
+				}
+
+			</div>
+		</div>
+
+		@*<div class="form-group">
+				@Html.LabelFor(model => model.MediaType, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@Html.EditorFor(model => model.MediaType, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.MediaType, "", new { @class = "text-danger" })
+				</div>
+			</div>*@
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</div>
+	</div>
+}	
+
+@*<div>
+		@Html.ActionLink("Back to List", "Index", "MediaGallery", new { mediaType = ViewBag.MediaType }, null)
+	</div>*@
+
+@section Scripts {
+	@Scripts.Render("~/bundles/jqueryval")
+}
