@@ -9,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MARK6.Models;
+using PagedList;
 
 namespace MARK6.Controllers
 {
@@ -17,12 +18,21 @@ namespace MARK6.Controllers
         private MARK6DBEntities db = new MARK6DBEntities();
 
         // GET: MediaGallery
-        public ActionResult Index(string mediaType)
+        public ActionResult Index(string mediaType, int? page)
         {
             ViewBag.MediaType = mediaType;
             List<MediaGallery> mediaGalleries;
             mediaGalleries = db.MediaGalleries.Where(s => s.MediaType == mediaType).ToList();
-            return View(mediaGalleries);
+
+            // Set the page size
+            int pageSize = 6;
+
+            // Get the page number from the query string or default to 1
+            int pageNumber = (page ?? 1);
+
+            // Create a paginated list
+            var pagedData = mediaGalleries.ToPagedList(pageNumber, pageSize);
+            return View(pagedData);
         }
 
         // GET: MediaGallery/Details/5
@@ -44,7 +54,7 @@ namespace MARK6.Controllers
         public ActionResult Create(string mediaType)
         {
             ViewBag.MediaType = mediaType;
-            return View();
+            return PartialView();
         }
 
         // POST: MediaGallery/Create
@@ -69,13 +79,13 @@ namespace MARK6.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(mediaGallery);
+            return PartialView(mediaGallery);
         }
 
         // GET: MediaGallery/Edit/5
 
         [Route("MediaGallery/Edit/{id}")]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id,string mediaType)
         {
             if (id == null)
             {
@@ -86,7 +96,8 @@ namespace MARK6.Controllers
             {
                 return HttpNotFound();
             }
-            return View(mediaGallery);
+            ViewBag.MediaType = mediaType;
+            return PartialView(mediaGallery);
         }
 
         // POST: MediaGallery/Edit/5
@@ -118,7 +129,7 @@ namespace MARK6.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(mediaGallery);
+            return PartialView(mediaGallery);
         }
 
         // GET: MediaGallery/Delete/5

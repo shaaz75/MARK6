@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MARK6.Models.MediaGallery>
+﻿@*@model IEnumerable<MARK6.Models.MediaGallery>*@
+@model PagedList.IPagedList<MARK6.Models.MediaGallery>
+
 
 @{
 	ViewBag.Title = ViewBag.MediaType;
@@ -64,17 +66,13 @@
 					<h5 class="modal-title" id="updateModalLabel">Upload Video</h5>
 				}
 
-
+				<h5 class="modal-title" id="updateModalLabel">Upload Video</h5>
 			</div>
 			<div class="modal-body">
-				-->
+
 				<!-- Load your "Edit" action content here using AJAX or include a partial view -->
-				@Html.Partial("Edit", new ViewDataDictionary { { "mediaType", ViewBag.MediaType }, { "id", 8 } })
-			</div>-->
-			<!--<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-			<!-- You can add additional buttons here if needed -->
-			<!--</div>-->
+				@Html.Partial("Edit", new ViewDataDictionary { { "mediaType", ViewBag.MediaType }, { "id", ViewBag.MediaId } })
+			</div>
 		</div>
 	</div>
 </div>
@@ -104,15 +102,23 @@
 
 				<div class="card-body">
 					<h5 class="card-title">@item.Title</h5>
-					@*@Html.ActionLink("Edit", "Edit", new { mediaType = ViewBag.MediaType, id = item.MediaId }, new { @class = "btn", data_toggle = "modal", data_target = "#updateModal" })*@
+					@Html.ActionLink("Edit", "Edit", new { mediaType = ViewBag.MediaType, id = item.MediaId }, new { @class = "btn", data_toggle = "modal", data_target = "#updateModal" })
 
 					@Html.ActionLink("Details", "Details", new { id = item.MediaId }) |
 					@Html.ActionLink("Delete", "Delete", new { id = item.MediaId })
 
-					<a href="#" data-toggle="modal" data-target="#updateModal">Edit New</a>
 				</div>
 			</div>
 		</div>
 
 	}
+
+	<!-- Render the pager -->
+<div class="text-center">
+	Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+	@for (var i = 1; i <= Model.PageCount; i++)
+	{
+<a href="@Url.Action("Index", new { page = i, ViewBag.MediaType })">@i</a>}
+</div>
 </div>
