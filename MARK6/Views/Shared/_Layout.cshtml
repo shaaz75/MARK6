@@ -63,6 +63,10 @@
 							width: 100%;
 						}
 
+		.dropdown ul li {
+			margin-top: 0px;
+		}
+
 			.sidebar .nav > li > a {
 				padding-left: 20px;
 				
@@ -108,7 +112,7 @@
 					<div class="col-md-3 sidebar" style="background-color:darkslateblue">
 						<ul class="nav nav-pills nav-stacked" style="margin:0px">
 
-							<li><a href="#content">Content</a></li>
+							<li>@Html.ActionLink("Home", "Index", "Home", null, null)</li>
 							<li class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Media Gallery <span class="caret"></span></a>
 								<ul class="dropdown-menu">
@@ -116,8 +120,8 @@
 									<li>@Html.ActionLink("Video Gallery", "Index", "MediaGallery", new { mediaType = "Video" }, null)</li>
 								</ul>
 							</li>
-							<li><a href="#calendar">Calendar</a></li>
-							<li><a href="#about">About Us</a></li>
+							<li>@Html.ActionLink("Contact", "contact", "Home", null, null)</li>
+							<li>@Html.ActionLink("About Us", "About", "Home", null, null)</li>
 						</ul>
 					</div>
 
