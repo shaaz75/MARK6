@@ -25,7 +25,7 @@ namespace MARK6.Controllers
             mediaGalleries = db.MediaGalleries.Where(s => s.MediaType == mediaType).ToList();
 
             // Set the page size
-            int pageSize = 6;
+            int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
 
             // Get the page number from the query string or default to 1
             int pageNumber = (page ?? 1);
@@ -78,8 +78,7 @@ namespace MARK6.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return PartialView(mediaGallery);
+            return PartialView(mediaGallery);  
         }
 
         // GET: MediaGallery/Edit/5
@@ -97,7 +96,7 @@ namespace MARK6.Controllers
                 return HttpNotFound();
             }
             ViewBag.MediaType = mediaType;
-            return PartialView(mediaGallery);
+            return View(mediaGallery);
         }
 
         // POST: MediaGallery/Edit/5
@@ -144,7 +143,7 @@ namespace MARK6.Controllers
             {
                 return HttpNotFound();
             }
-            return View(mediaGallery);
+            return PartialView(mediaGallery);
         }
 
         // POST: MediaGallery/Delete/5
@@ -163,6 +162,29 @@ namespace MARK6.Controllers
             db.MediaGalleries.Remove(mediaGallery);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [Route("MediaGallery/Download/{id}")]
+        public ActionResult Download(int? id)
+        {
+            MediaGallery existingMediaFile = db.MediaGalleries.AsNoTracking().Where(s => s.MediaId == id).FirstOrDefault();
+
+            //Delete Existing File
+            string absoultePath = Server.MapPath(existingMediaFile.MediaPath);
+            // Assuming you have an "Images" folder in your project
+
+            // Check if the file exists
+            if (System.IO.File.Exists(absoultePath))
+            {
+                var filename = Path.GetFileName(absoultePath);
+                // Set the Content-Disposition header to force the browser to download the file
+                return File(absoultePath, "image/jpeg", filename);
+            }
+            else
+            {
+                // If the file doesn't exist, return a 404 Not Found response
+                return HttpNotFound();
+            }
         }
 
         protected override void Dispose(bool disposing)
