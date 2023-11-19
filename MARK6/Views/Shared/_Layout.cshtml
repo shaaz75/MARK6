@@ -34,22 +34,34 @@
 			color: #3373;
 		}
 
+			.sidebar ul {
 			
-			.sidebar a {
-				display: block;
-				padding: 10px;
-				
-				color: #fff;
-				
-				font-size:inherit;
-				text-decoration: none;
+				margin: 0px;
 			}
 
-
-				.sidebar a:hover {
+				.sidebar ul li {
+					margin-top: 10px;
 					background-color: #ddd;
-					color:black;
+					color: black;
+					width:100%;
 				}
+
+					.sidebar ul li a {
+						display: block;
+						padding: 10px;
+						color: #000;
+						border: 1px solid white;
+						font-size: inherit;
+						text-decoration: none;
+						width: 100%;
+					}
+
+
+						.sidebar ul li a:hover {
+							background-color: darkslateblue;
+							color: #fff;
+							width: 100%;
+						}
 
 			.sidebar .nav > li > a {
 				padding-left: 20px;
@@ -94,8 +106,8 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-3 sidebar" style="background-color:darkslateblue">
+						<ul class="nav nav-pills nav-stacked" style="margin:0px">
 
-						<ul class="nav nav-pills nav-stacked">
 							<li><a href="#content">Content</a></li>
 							<li class="dropdown">
 								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Media Gallery <span class="caret"></span></a>
