@@ -35,7 +35,7 @@ CREATE TABLE [dbo].[MediaGalleries] (
     [MediaId] int IDENTITY(1,1) NOT NULL,
     [Title] varchar(250)  NULL,
     [MediaPath] varchar(max)  NULL,
-    [MediaType] varchar(10)  NULL
+    [MediaType] varchar(20)  NULL
 );
 GO
 

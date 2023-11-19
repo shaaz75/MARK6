@@ -4,20 +4,32 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MARK6DBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="MARK6DBModelStoreContainer">
-    <EntitySet Name="MediaGalleries" EntityType="MARK6DBModel.Store.MediaGalleries" store:Type="Tables" Schema="dbo" />
-  </EntityContainer>
-  <EntityType Name="MediaGalleries">
-    <Key>
-      <PropertyRef Name="MediaId" />
-    </Key>
-    <Property Name="MediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="varchar" Nullable="true" MaxLength="250" />
-    <Property Name="MediaPath" Type="varchar(max)" Nullable="true" />
-    <Property Name="MediaType" Type="varchar" Nullable="true" MaxLength="10" />
-  </EntityType>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="MARK6DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="Event_id" />
+          </Key>
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Event_start" Type="varchar" MaxLength="50" />
+          <Property Name="Event_end" Type="varchar" MaxLength="50" />
+          <Property Name="All_day" Type="bit" />
+          <Property Name="Event_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaGalleries">
+          <Key>
+            <PropertyRef Name="MediaId" />
+          </Key>
+          <Property Name="MediaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="250" />
+          <Property Name="MediaPath" Type="varchar(max)" />
+          <Property Name="MediaType" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityContainer Name="MARK6DBModelStoreContainer">
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaGalleries" EntityType="Self.MediaGalleries" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MARK6DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -32,7 +44,19 @@
         </EntityType>
         <EntityContainer Name="MARK6DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="MediaGalleries" EntityType="Self.MediaGallery" />
+          <EntitySet Name="Events" EntityType="MARK6DBModel.Event" />
         </EntityContainer>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Event_id" />
+          </Key>
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Event_start" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Event_end" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="All_day" Type="Boolean" />
+          <Property Name="Event_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -49,6 +73,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="MARK6DBModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="Event_id" ColumnName="Event_id" />
+                <ScalarProperty Name="All_day" ColumnName="All_day" />
+                <ScalarProperty Name="Event_end" ColumnName="Event_end" />
+                <ScalarProperty Name="Event_start" ColumnName="Event_start" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

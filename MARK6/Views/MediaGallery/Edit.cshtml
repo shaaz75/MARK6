@@ -4,12 +4,28 @@
 
 @{
 	ViewBag.Title = "Edit";
+	Layout = null;
 	// Retrieve accepted file extensions from web.config
 	// Retrieve accepted file extensions from web.config
 	var imageExtensions = ConfigurationManager.AppSettings["imageExtensions"];
 	var videoExtensions = ConfigurationManager.AppSettings["videoExtensions"];
 }
 
+<div class="modal-header bg-primary">
+
+	<button type="button" class="close btn btn-outline-light" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	@if (ViewBag.MediaType == "Photo")
+	{
+		<h5 class="modal-title" id="updateModalLabelPhoto">Upload Image</h5> }
+	else
+	{
+		<h5 class="modal-title" id="updateModalLabelVideo">Upload Video</h5>}
+
+
+</div>
+<br />
 @using (Html.BeginForm("Edit", "MediaGallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 	@Html.AntiForgeryToken()
@@ -18,39 +34,43 @@
 		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 		@Html.HiddenFor(model => model.MediaId)
 
-	<div class="form-group">
-		<div class="col-md-2">
-			@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })</div>
+		<div class="form-group">
+			<div class="col-md-2">
+				@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+			</div>
 			<div class="col-md-10">
 				@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
 				@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
 			</div>
 		</div>
 
-	<div class="form-group">
-		<div class="col-md-2">
-			@Html.LabelFor(model => model.MediaPath, htmlAttributes: new { @class = "control-label col-md-2" })</div>
+		<div class="form-group">
+			<div class="col-md-2">
+				@Html.LabelFor(model => model.MediaPath, htmlAttributes: new { @class = "control-label col-md-2" })
+			</div>
 			<div class="col-md-10">
 				@if (ViewBag.MediaType == "Photo")
 				{
 					<input type="file" name="MediaFile" required accept=@imageExtensions />
+					@Html.ValidationMessageFor(model => model.MediaFile, "", new { @class = "text-danger" })
 					<p style="font-size:small">Upload @imageExtensions file of up to 7 MB</p>
 				}
 				else
 				{
 					<input type="file" name="MediaFile" required accept=@videoExtensions />
+					@Html.ValidationMessageFor(model => model.MediaFile, "", new { @class = "text-danger" })
 					<p style="font-size:small">Upload @videoExtensions file of up to 7 MB</p>
 				}
 			</div>
 		</div>
 
 		@*<div class="form-group">
-			@Html.LabelFor(model => model.MediaType, htmlAttributes: new { @class = "control-label col-md-2" })
-			<div class="col-md-10">
-				@Html.EditorFor(model => model.MediaType, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.MediaType, "", new { @class = "text-danger" })
-			</div>
-		</div>*@
+				@Html.LabelFor(model => model.MediaType, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-10">
+					@Html.EditorFor(model => model.MediaType, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.MediaType, "", new { @class = "text-danger" })
+				</div>
+			</div>*@
 
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
@@ -60,10 +80,37 @@
 	</div>
 }
 
+
+
 @*<div>
-	@Html.ActionLink("Back to List", "Index")
-</div>*@
+		@Html.ActionLink("Back to List", "Index")
+	</div>*@
 
 @section Scripts {
 	@Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+	$(document).ready(function () {
+		$('[data-dismiss=modal]').on('click', function (e) {
+			var $t = $(this),
+				target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
+
+			$(target)
+				.find("input,textarea,select")
+				.val('')
+				.end()
+				.find("input[type=checkbox], input[type=radio]")
+				.prop("checked", "")
+				.end();
+		})
+	})
+</script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- jQuery Validate -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+<!-- jQuery Validate Unobtrusive -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>

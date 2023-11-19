@@ -21,6 +21,12 @@ namespace MARK6
             //         );
 
             routes.MapRoute(
+                name: "CalendarIndex",
+                url: "Calendar/Index/{id}",
+                defaults: new { controller = "Calendar", action = "Index" , id = UrlParameter.Optional }
+             );
+
+            routes.MapRoute(
                 name: "MediaGalleryIndex",
                 url: "MediaGallery/Index/{mediaType}",
                 defaults: new { controller = "MediaGallery", action = "Index"}

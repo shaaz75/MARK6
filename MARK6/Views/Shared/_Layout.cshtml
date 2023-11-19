@@ -1,46 +1,152 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title - My ASP.NET Application</title>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+	@*<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css' />*@
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+	<!-- qTip -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
+
+	<!-- Full Calendar -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.print.css" media="print" />
+	<style>
+		body {
+			padding-top: 50px;
+		}
+
+		.sidebar {
+			height: 100%;
+			width: 250px;
+			position: fixed;
+			background-color: #f8f9fa;
+			padding-top: 20px;
+			/*padding-left: 10px;*/
+			background-color: #337ab7;
+			color: #3373;
+		}
+
+			
+			.sidebar a {
+				display: block;
+				padding: 10px;
+				
+				color: #fff;
+				
+				font-size:inherit;
+				text-decoration: none;
+			}
+
+
+				.sidebar a:hover {
+					background-color: #ddd;
+					color:black;
+				}
+
+			.sidebar .nav > li > a {
+				padding-left: 20px;
+				
+			}
+
+		.dropdown-menu-nested {
+			position: absolute;
+			top: 0;
+			left: 100%;
+			margin-top: -34px; /* Adjust this value to position the nested menu */
+		}
+	</style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li>@Html.ActionLink("Home", "Index", "Home")</li>
-					<li>@Html.ActionLink("About", "About", "Home")</li>
-					<li>@Html.ActionLink("Photo Gallery", "Index", "MediaGallery", new { mediaType = "Photo" }, null)</li>
-					<li>@Html.ActionLink("Video Gallery", "Index", "MediaGallery", new { mediaType = "Video" }, null)</li>
-					
-</ul>
-                <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+	@*<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+					</div>
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li>@Html.ActionLink("Home", "Index", "Home")</li>
+							<li>@Html.ActionLink("About", "About", "Home")</li>
+							<li>@Html.ActionLink("Photo Gallery", "Index", "MediaGallery", new { mediaType = "Photo" }, null)</li>
+							<li>@Html.ActionLink("Video Gallery", "Index", "MediaGallery", new { mediaType = "Video" }, null)</li>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/popper")
-    @RenderSection("scripts", required: false)
+		</ul>
+						<p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
+					</div>
+				</div>
+			</div>*@
+
+
+	<div class="row">
+		<div class="col-md-1">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-3 sidebar" style="background-color:darkslateblue">
+
+						<ul class="nav nav-pills nav-stacked">
+							<li><a href="#content">Content</a></li>
+							<li class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">Media Gallery <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li>@Html.ActionLink("Photo Gallery", "Index", "MediaGallery", new { mediaType = "Photo" }, null)</li>
+									<li>@Html.ActionLink("Video Gallery", "Index", "MediaGallery", new { mediaType = "Video" }, null)</li>
+								</ul>
+							</li>
+							<li><a href="#calendar">Calendar</a></li>
+							<li><a href="#about">About Us</a></li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-md-11">
+			<div class="container body-content">
+				@RenderBody()
+				<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>
+				<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js'></script>
+				<link href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet" />
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
+				<link href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css" rel="stylesheet" />
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js"></script>-->
+				@*<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>*@
+				<!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+				<hr />
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/popper")
+	@RenderSection("scripts", required: false)
+
+	<!-- Include moment-->
+	<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+	<!-- qTip -->
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
+
+	<!-- Full Calendar -->
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.min.js"></script>
+	@Scripts.Render("~/bundles/Script-calendar")
 </body>
+@*<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">*@
 </html>

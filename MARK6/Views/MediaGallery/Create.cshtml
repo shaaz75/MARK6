@@ -35,12 +35,14 @@
 				{
 					@*<input type="file" name="MediaFile" required accept=@imageExtensions />*@
 					<input class="form-control form-control-lg" type="file" name="MediaFile" required accept=@imageExtensions />
+					@Html.ValidationMessageFor(model => model.MediaFile, "", new { @class = "text-danger" })
 					<p style="font-size:small">Upload @imageExtensions file of up to 7 MB</p>
 				}
 				else
 				{
 					@*<input type="file" name="MediaFile" required accept=@videoExtensions />*@
 					<input class="form-control form-control-lg" type="file" name="MediaFile" required accept=@videoExtensions />
+					@Html.ValidationMessageFor(model => model.MediaFile, "", new { @class = "text-danger" })
 					<p style="font-size:small">Upload @videoExtensions file of up to 7 MB</p>
 				}
 
@@ -61,11 +63,21 @@
 			</div>
 		</div>
 	</div>
-}	
+}
 
 @*<div>
 		@Html.ActionLink("Back to List", "Index", "MediaGallery", new { mediaType = ViewBag.MediaType }, null)
 	</div>*@
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- jQuery Validate -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+<!-- jQuery Validate Unobtrusive -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
 
 @section Scripts {
 	@Scripts.Render("~/bundles/jqueryval")

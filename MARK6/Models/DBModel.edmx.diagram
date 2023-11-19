@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="1ef5573862de45898dd1c939d9142722" Name="Diagram1">
         <EntityTypeShape EntityType="MARK6DBModel.MediaGallery" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MARK6DBModel.Event" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

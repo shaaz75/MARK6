@@ -26,5 +26,6 @@ namespace MARK6.Models
         }
     
         public virtual DbSet<MediaGallery> MediaGalleries { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
     }
 }

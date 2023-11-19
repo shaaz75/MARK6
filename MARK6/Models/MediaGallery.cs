@@ -11,15 +11,12 @@ namespace MARK6.Models
 {
     using System;
     using System.Collections.Generic;
-	using System.ComponentModel;
 	using System.Web;
 
 	public partial class MediaGallery
     {
         public int MediaId { get; set; }
         public string Title { get; set; }
-      
-        [DisplayName("File")]
         public string MediaPath { get; set; }
         public string MediaType { get; set; }
 
